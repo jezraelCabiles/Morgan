@@ -1,23 +1,38 @@
+// src/components/Header.jsx
+// Navbar component with responsive design and login/signup sidebars
+// Uses React, lucide-react for icons, and react-router-dom for navigation
+// Tailwind CSS classes are used for styling
+// State management is handled with React's useState hook
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
+  // State variables for menu, login, signup, and form fields
   const [menuOpen, setMenuOpen] = useState(false);
+  // Login sidebar state
   const [login, setLogin] = useState(false);
+  // Signup sidebar state
   const [signup, setSignup] = useState(false);
+  // Form field states
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  // Email state for signup
   const [email, setEmail] = useState("");
+  // Confirm password state for signup
   const [cpass, setCpass] = useState("");
 
+  // Clear Fields in Login sidebar
 
-  /* Clear Fields in Login sidebar  */
-
+  // Close login sidebar and reset fields
   const closeLogin = () => {
     setLogin(false);
     setUsername("");
     setPassword("");
   };
+
+  // Switch to Signup sidebar from Login sidebar and reset fields
+  // Clear Fields in Signup sidebar
 
   const loginLink = (e) => {
     e.preventDefault();
@@ -27,7 +42,8 @@ export default function Navbar() {
     setPassword("");
   };
 
-  /* Clear Fields in Sign Up sidebar  */
+  // Switch to Login sidebar from Signup sidebar and reset fields
+  // Clear Fields in Login sidebar
 
   const signupLink = (e) => {
     e.preventDefault();
@@ -38,7 +54,8 @@ export default function Navbar() {
     setCpass("");
     setEmail("");
   };
-
+  // Close signup sidebar and reset fields
+  // Clear Fields in Signup sidebar
   const closeSignup = () => {
     setSignup(false);
     setUsername("");
@@ -49,11 +66,19 @@ export default function Navbar() {
 
   return (
     <nav className="w-full bg-white shadow-md fixed top-0 left-0 z-50">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">Inventory System</h1>
+      <div className="max-w-full mx-auto py-4 flex items-center justify-between px-6">
+        <h1 className="text-2xl font-semibold ml-10">Inventory System</h1>
 
-        {/* Desktop Menu */}
-        <ul className="hidden md:flex gap-8 text-lg">
+        {/* Desktop Menu 
+        // Hidden on mobile devices
+        // Visible on medium and larger screens
+        // Menu items for Login and Sign up
+        // Styled with hover effects and transitions
+        // Uses buttons to trigger sidebars
+    
+        
+        */}
+        <ul className="hidden md:flex gap-8 text-lg mr-10">
           <li className="cursor-pointer hover:text-blue-600 transition">
             <button onClick={() => setLogin(true)}>Login</button>
           </li>
@@ -62,13 +87,23 @@ export default function Navbar() {
           </li>
         </ul>
 
-        {/* Mobile Toggle */}
+        {/* Mobile Toggle 
+        // Visible on mobile devices
+        // Hidden on medium and larger screens
+        // Toggles the mobile menu visibility
+        // Uses Menu and X icons from lucide-react
+        */}
         <button className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
           {menuOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu 
+      // Visible only when menuOpen is true
+      // Hidden on medium and larger screens
+      // Menu items for Login and Sign up
+      // Styled with hover effects and transitions
+        */}
       {menuOpen && (
         <div className="md:hidden bg-white shadow-inner">
           <ul className="flex flex-col px-6 pb-4 pt-4 gap-4 text-lg">
@@ -97,7 +132,11 @@ export default function Navbar() {
         </div>
       )}
 
-      {/* LOGIN SIDEBAR */}
+      {/* LOGIN SIDEBAR
+      // Slides in from the right when login state is true
+      // Contains a login form with username and password fields
+      // Includes a link to switch to the signup sidebar
+      */}
       <div
         className={`fixed top-0 right-0 h-full w-full bg-white p-6 transition-transform duration-300 md:w-96 ${
           login ? "translate-x-0" : "translate-x-full"
@@ -132,13 +171,14 @@ export default function Navbar() {
               required
             />
           </label>
-
-          <button
-            type="submit"
-            className="bg-green-500 p-2 rounded-lg font-semibold text-lg w-full mt-6 hover:bg-green-600"
-          >
-            Login
-          </button>
+          <Link to="/DashBoard" className="w-full">
+            <button
+              type="submit"
+              className="bg-green-500 p-2 rounded-lg font-semibold text-lg w-full mt-6 hover:bg-green-600"
+            >
+              Login
+            </button>
+          </Link>
 
           <div className="mt-3 text-center text-md w-full">
             <span>
@@ -155,7 +195,11 @@ export default function Navbar() {
         </form>
       </div>
 
-      {/* SIGNUP SIDEBAR */}
+      {/* SIGNUP SIDEBAR 
+      // Slides in from the right when signup state is true
+      // Contains a signup form with username, email, password, and confirm password fields
+      // Includes a link to switch to the login sidebar
+      */}
       <div
         className={`fixed top-0 right-0 h-full w-full bg-white p-6 transition-transform duration-300 md:w-96 ${
           signup ? "translate-x-0" : "translate-x-full"
